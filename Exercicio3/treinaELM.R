@@ -68,7 +68,7 @@ plotGraphics <- function(xin, classes, nNeuronios) {
   H <- retlist[[2]]
   Z <- retlist[[3]]
   
-  Yhat_train <- predictELM()(xin, Z, W, 1)
+  Yhat_train <- predictELM(xin, Z, W, 1)
   print((classes - Yhat_train)^2)
   e_train <- sum((classes - Yhat_train)^2)
   print(e_train)
