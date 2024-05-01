@@ -14,11 +14,11 @@ s1 <- 0.4
 s2 <- 0.4
 s3 <- 0.4
 s4 <- 0.4
-nc <- 100
+nc <- 300
 
-xc1 <- matrix(rnorm(nc * 2), ncol = 2) * s1 + t(matrix(c(2, 2), ncol = nc, nrow = 2))
-xc2 <- matrix(rnorm(nc * 2), ncol = 2) * s2 + t(matrix(c(2, 6), ncol = nc, nrow = 2))
-xc3 <- matrix(rnorm(nc * 2), ncol = 2) * s3 + t(matrix(c(6, 2), ncol = nc, nrow = 2))
+xc1 <- matrix(rnorm(nc * 2), ncol = 2) * s1 + t(matrix(c(3, 3), ncol = nc, nrow = 2))
+xc2 <- matrix(rnorm(nc * 2), ncol = 2) * s2 + t(matrix(c(3, 6), ncol = nc, nrow = 2))
+xc3 <- matrix(rnorm(nc * 2), ncol = 2) * s3 + t(matrix(c(6, 3), ncol = nc, nrow = 2))
 xc4 <- matrix(rnorm(nc * 2), ncol = 2) * s4 + t(matrix(c(6, 6), ncol = nc, nrow = 2))
 
 x <- rbind(xc1, xc2, xc3, xc4)
@@ -27,22 +27,22 @@ d2 <- dim(xc2)[1]
 d3 <- dim(xc3)[1]
 d4 <- dim(xc4)[1]
 
-corDegrade1 <- colorRampPalette(c("red","orange"))
-corDegrade2 <- colorRampPalette(c("cyan", "magenta"))
+corDegrade1 <- colorRampPalette(c("turquoise","aquamarine"))
+corDegrade2 <- colorRampPalette(c("violetred1", "violetred"))
 
 y <- c(rep(1, d1), rep(-1, d2), rep(-1, d3), rep(1, d4))
 
-plot(x[which(y == 1), 1], x[which(y == 1), 2], col = corDegrade1(10), xlim = c(0, 8), ylim = c(0, 9), xlab = 'x1', ylab = 'x2')
+plot(x[which(y == 1), 1], x[which(y == 1), 2], col = corDegrade1(10), xlim = c(0, 9), ylim = c(0, 9), xlab = 'x1', ylab = 'x2')
 par(new = T)
-plot(x[which(y == -1), 1], x[which(y == -1), 2], col = corDegrade2(10), xlim = c(0, 8), ylim = c(0, 9), xlab = '', ylab = '')
-legend('top', legend = ('Função de Base Radial Gaussiana R = 1.6'))
+plot(x[which(y == -1), 1], x[which(y == -1), 2], col = corDegrade2(10), xlim = c(0, 9), ylim = c(0, 9), xlab = '', ylab = '')
+legend('top', legend = ('Função de Base Radial R = 4.0'))
 
 # 4 gaussianas
 
-S <- 1.6
-c1 = c(2, 2)
-c2 = c(2, 6)
-c3 = c(6, 2)
+S <- 4.0
+c1 = c(3, 3)
+c2 = c(3, 6)
+c3 = c(6, 3)
 c4 = c(6, 6)
 
 # Camada oculta calculada com a função rbf
@@ -79,13 +79,6 @@ for (i in 1:length(xgrid1)) {
   }
 }
 
-plot(x[which(y == 1), 1], x[which(y == 1), 2], col = corDegrade1(10), xlim = c(0, 8), ylim = c(0, 9), xlab = 'x1', ylab = 'x2')
-par(new = T)
-plot(x[which(y == -1), 1], x[which(y == -1), 2], col = corDegrade2(10), xlim = c(0, 8), ylim = c(0, 9), xlab = '', ylab = '')
-par(new = T)
-contour(xgrid1, xgrid2, YHATG, levels = 0, labels = '', col = 'black',  xlim = c(0, 8), ylim = c(0, 9))
-legend('top', legend = ('Função de Base Radial Gaussiana R = 1.6'))
-
 # Clustering
 
 # Número de grupos em que o conjunto de dados será dividido para treinamento e teste
@@ -109,10 +102,10 @@ for (fold in 1:k) {
   y_test <- y[test_indices]
   
   # Treinando a rede e calculando os pesos de W
-  S <- 1.6
-  c1 = c(2, 2)
-  c2 = c(2, 6)
-  c3 = c(6, 2)
+  S <- 4.0
+  c1 = c(3, 3)
+  c2 = c(3, 6)
+  c3 = c(6, 3)
   c4 = c(6, 6)
   
   h1 <- rbf(x_train, c1, S)
@@ -144,13 +137,26 @@ for (fold in 1:k) {
 mean_accuracy <- mean(accuracies)
 std_accuracy <- sd(accuracies)
 
-# Imprimir a média e desvio padrão das acurácias
+plot(x[which(y == 1), 1], x[which(y == 1), 2], col = corDegrade1(10), xlim = c(0, 9), ylim = c(0, 10), xlab = 'x1', ylab = 'x2')
+par(new = T)
+plot(x[which(y == -1), 1], x[which(y == -1), 2], col = corDegrade2(10), xlim = c(0, 9), ylim = c(0, 10), xlab = '', ylab = '')
+par(new = T)
+contour(xgrid1, xgrid2, YHATG, levels = 0, labels = '', col = 'black',  xlim = c(0, 9), ylim = c(0, 10))
+legend('bottomright', legend = c(paste("Média das Acurácias:", round(mean_accuracy, 3)),
+                            paste("Desvio Padrão das Acurácias:", round(std_accuracy, 3))),
+       col = c("black", "black"), lty = 0, cex = 0.8, bg = "white", box.lty = 0)
+legend('top', legend = ('Função de Base Radial Gaussiana R = 4.0'))
+arrows(x0 = 1.0, y0 = 6.8, x1 = 2.0, y1 = 6.0, length = 0.1);
+text(x = 0.8, y = 7.5, labels = "300 amostras/grupo")
 
 cat("Acurácia Média: ", mean_accuracy, "\n")
 cat("Desvio Padrão da Acurácia: ", std_accuracy, "\n")
-
-# Guardando os valores de acurácia, média e desvio padrão em um arquivo
-
-write.table(accuracies, file = "accuracies.txt", row.names = FALSE, col.names = FALSE)
-write.table(mean_accuracy, file = "mean_accuracy.txt", row.names = FALSE, col.names = FALSE)
-write.table(std_accuracy, file = "std_accuracy.txt", row.names = FALSE, col.names = FALSE)
+  
+# Imprimindo no arquivo accuracies.txt
+output <- cbind(paste("Simulação", 1:k), accuracies)
+colnames(output) <- c("Simulação", "Acurácia")
+write.table(output, file = "accuracies.txt", row.names = FALSE, col.names = TRUE)
+  
+# Adicionando média e desvio no final do arquivo
+cat("\nMédia das Acurácias: ", mean_accuracy, "\n", file = "accuracies.txt", append = TRUE)
+cat("\nDesvio Padrão das Acurácias: ", std_accuracy, "\n", file = "accuracies.txt", append = TRUE)
