@@ -60,6 +60,9 @@ plotGraphics <- function(xin, classes, nNeuronios) {
   } else if (nNeuronios == 150) {
     plot(xin[,1], xin[,2], col = cores[classes + 1], xlim = c(-2, 2), ylim = c(-2, 2))
     legend('top', legend = ('Superfície de Separação com p = 150'))
+  } else if (nNeuronios == 300) {
+    plot(xin[,1], xin[,2], col = cores[classes + 1], xlim = c(-2, 2), ylim = c(-2, 2))
+    legend('top', legend = ('Superfície de Separação com p = 300'))
   }
   
   retlist <- treinaELM(xin, classes, nNeuronios, 1)
@@ -68,7 +71,7 @@ plotGraphics <- function(xin, classes, nNeuronios) {
   H <- retlist[[2]]
   Z <- retlist[[3]]
   
-  Yhat_train <- predictELM()(xin, Z, W, 1)
+  Yhat_train <- predictELM(xin, Z, W, 1)
   print((classes - Yhat_train)^2)
   e_train <- sum((classes - Yhat_train)^2)
   print(e_train)

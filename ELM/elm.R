@@ -18,7 +18,7 @@ circleClasses <- circleClasses - 1
 spiralsClasses <- as.numeric(spirals$classes)
 spiralsClasses <- spiralsClasses - 1
 
-nNeuronios <- c(5, 10, 15, 20, 25, 30, 60, 100, 150)
+nNeuronios <- c(5, 10, 15, 20, 25, 30, 60, 100, 150, 300)
 
 for(i in nNeuronios) {
   plotGraphics(bidimensionalNormals$x, biClasses, i)
