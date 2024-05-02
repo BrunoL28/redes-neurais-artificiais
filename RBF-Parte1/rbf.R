@@ -14,7 +14,7 @@ s1 <- 0.4
 s2 <- 0.4
 s3 <- 0.4
 s4 <- 0.4
-nc <- 300
+nc <- 100
 
 xc1 <- matrix(rnorm(nc * 2), ncol = 2) * s1 + t(matrix(c(3, 3), ncol = nc, nrow = 2))
 xc2 <- matrix(rnorm(nc * 2), ncol = 2) * s2 + t(matrix(c(3, 6), ncol = nc, nrow = 2))
@@ -35,11 +35,11 @@ y <- c(rep(1, d1), rep(-1, d2), rep(-1, d3), rep(1, d4))
 plot(x[which(y == 1), 1], x[which(y == 1), 2], col = corDegrade1(10), xlim = c(0, 9), ylim = c(0, 9), xlab = 'x1', ylab = 'x2')
 par(new = T)
 plot(x[which(y == -1), 1], x[which(y == -1), 2], col = corDegrade2(10), xlim = c(0, 9), ylim = c(0, 9), xlab = '', ylab = '')
-legend('top', legend = ('Função de Base Radial R = 4.0'))
+legend('top', legend = ('Função de Base Radial R = 1.2'))
 
 # 4 gaussianas
 
-S <- 4.0
+S <- 1.2
 c1 = c(3, 3)
 c2 = c(3, 6)
 c3 = c(6, 3)
@@ -102,7 +102,7 @@ for (fold in 1:k) {
   y_test <- y[test_indices]
   
   # Treinando a rede e calculando os pesos de W
-  S <- 4.0
+  S <- 1.2
   c1 = c(3, 3)
   c2 = c(3, 6)
   c3 = c(6, 3)
@@ -145,9 +145,9 @@ contour(xgrid1, xgrid2, YHATG, levels = 0, labels = '', col = 'black',  xlim = c
 legend('bottomright', legend = c(paste("Média das Acurácias:", round(mean_accuracy, 3)),
                             paste("Desvio Padrão das Acurácias:", round(std_accuracy, 3))),
        col = c("black", "black"), lty = 0, cex = 0.8, bg = "white", box.lty = 0)
-legend('top', legend = ('Função de Base Radial Gaussiana R = 4.0'))
+legend('top', legend = ('Função de Base Radial Gaussiana R = 1.2'))
 arrows(x0 = 1.0, y0 = 6.8, x1 = 2.0, y1 = 6.0, length = 0.1);
-text(x = 0.8, y = 7.5, labels = "300 amostras/grupo")
+text(x = 0.8, y = 7.5, labels = "100 amostras/grupo")
 
 cat("Acurácia Média: ", mean_accuracy, "\n")
 cat("Desvio Padrão da Acurácia: ", std_accuracy, "\n")

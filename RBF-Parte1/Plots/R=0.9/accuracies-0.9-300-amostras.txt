@@ -1,0 +1,15 @@
+"Simulação" "Acurácia"
+"Simulação 1" "1"
+"Simulação 2" "0.991666666666667"
+"Simulação 3" "0.975"
+"Simulação 4" "1"
+"Simulação 5" "0.991666666666667"
+"Simulação 6" "1"
+"Simulação 7" "0.991666666666667"
+"Simulação 8" "0.991666666666667"
+"Simulação 9" "1"
+"Simulação 10" "0.991666666666667"
+
+Média das Acurácias:  0.9933333 
+
+Desvio Padrão das Acurácias:  0.007657805 
